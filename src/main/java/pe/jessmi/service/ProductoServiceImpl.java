@@ -14,9 +14,58 @@ public class ProductoServiceImpl implements ProductoService {
 	@Autowired
 	private ProductoRepository repository;
 
+	@Override
+	@Transactional
+	public void insert(Producto producto) {
+		repository.save(producto);
+	}
+
+	@Override
 	@Transactional(readOnly=true)
 	public Collection<Producto> findAll() {
 		return repository.findAll();
+	}
+
+	@Override
+	@Transactional(readOnly=true)
+	public Producto findById(Integer idProducto) {
+		return repository.findById(idProducto).orElse(null);
+	}
+
+	@Override
+	@Transactional(readOnly=true)
+	public Collection<Producto> findByMarca(String marca) {
+		return repository.findByMarca(marca);
+	}
+
+	@Override
+	@Transactional(readOnly=true)
+	public Collection<Producto> findByNombre(String nombre) {
+		return repository.findByMarca(nombre);
+	}
+
+	@Override
+	@Transactional(readOnly=true)
+	public Collection<Producto> orderByPrecio() {
+		return repository.orderByPrecio();
+	}
+
+	@Override
+	@Transactional(readOnly=true)
+	public Collection<Producto> orderByStock() {
+		return repository.orderByStock();
+	}
+
+	@Override
+	@Transactional
+	public void update(Producto producto) {
+		repository.save(producto);
+	}
+
+	@Override
+	@Transactional
+	public void delete(Integer idProducto) {
+		repository.deleteById(idProducto);
 	}
 
 }
