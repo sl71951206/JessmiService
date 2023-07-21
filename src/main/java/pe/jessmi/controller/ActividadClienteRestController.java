@@ -62,7 +62,7 @@ public class ActividadClienteRestController {
 	}
 	
 	@GetMapping("/buscarPorCorreo/{correo}")
-	public ResponseEntity<?> buscarPorCorreo(@PathVariable String correo) {
+	public ResponseEntity<?> buscarPorCorreo_GET(@PathVariable String correo) {
 		Collection<ActividadCliente> actividadClientes = service.findByCorreo(correo);
 	    if (actividadClientes.isEmpty()) {
 	    	return new ResponseEntity<>(HttpStatus.NO_CONTENT);

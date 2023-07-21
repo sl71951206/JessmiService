@@ -62,7 +62,7 @@ public class CompraRestController {
 	}
 	
 	@GetMapping("/buscarPorCorreo/{correo}")
-	public ResponseEntity<?> buscarPorCorreo(@PathVariable String correo) {
+	public ResponseEntity<?> buscarPorCorreo_GET(@PathVariable String correo) {
 		Collection<Compra> compras = service.findByCorreo(correo);
 	    if (compras.isEmpty()) {
 	    	return new ResponseEntity<>(HttpStatus.NO_CONTENT);

@@ -41,7 +41,7 @@ public class ProductoServiceImpl implements ProductoService {
 	@Override
 	@Transactional(readOnly=true)
 	public Collection<Producto> findByNombre(String nombre) {
-		return repository.findByMarca(nombre);
+		return repository.findByNombre(nombre);
 	}
 
 	@Override

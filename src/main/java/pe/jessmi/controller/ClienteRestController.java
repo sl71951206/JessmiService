@@ -55,7 +55,7 @@ public class ClienteRestController {
 	}
 	
 	@GetMapping("/buscar/{correo}/{contrasena}")
-	public ResponseEntity<?> buscar(@PathVariable String correo, @PathVariable String contrasena) {
+	public ResponseEntity<?> buscar_GET(@PathVariable String correo, @PathVariable String contrasena) {
 		Cliente cliente = service.findByCorreoWithContrasena(correo, contrasena);
 	    if (cliente == null) {
 	    	return new ResponseEntity<>("¡Credenciales incorrectas!", HttpStatus.NOT_FOUND);
