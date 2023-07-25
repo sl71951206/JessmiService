@@ -15,6 +15,6 @@ public interface ActividadClienteRepository extends JpaRepository<ActividadClien
 	
 	@Query(value="SELECT * FROM actividad_cliente WHERE id_cliente = "
 			+ "(SELECT id_cliente FROM cliente WHERE correo = :correo)", nativeQuery=true)
-	public abstract Collection<ActividadCliente> findByCorreo(@Param("correo") String correo); 
+	public abstract Collection<ActividadCliente> findByCorreo(@Param("correo") String correo);
 
 }

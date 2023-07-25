@@ -10,7 +10,6 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.PrePersist;
 import javax.persistence.Table;
 
 @Entity
@@ -23,13 +22,8 @@ public class ActividadCliente implements Serializable {
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Integer id_actividad_cliente;
 	
-	@Column
+	@Column(columnDefinition="DATETIME DEFAULT CURRENT_TIMESTAMP")
 	private LocalDateTime fecha;
-	
-	@PrePersist
-	private void prePersist() {
-		fecha = LocalDateTime.now();
-	}
 	
 	@ManyToOne
 	@JoinColumn(name="id_tipo_actividad")

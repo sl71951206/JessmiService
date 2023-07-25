@@ -40,8 +40,21 @@ public class CompraServiceImpl implements CompraService {
 	}
 
 	@Override
+	@Transactional(readOnly=true)
 	public Collection<Compra> findByCorreo(String correo) {
 		return repository.findByCorreo(correo);
+	}
+
+	@Override
+	@Transactional(readOnly=true)
+	public Compra findByIdClienteLimit1(Integer id_cliente) {
+		return repository.findByIdClienteLimit1(id_cliente);
+	}
+	
+	@Override
+	@Transactional
+	public void insertByProductos(Integer idCliente, Integer idMetodoPago) {
+		repository.saveByProductos(idCliente, idMetodoPago);
 	}
 
 }

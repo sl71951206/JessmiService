@@ -1,6 +1,7 @@
 package pe.jessmi.controller;
 
 import java.util.Collection;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -11,10 +12,14 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import pe.jessmi.entity.Compra;
+import pe.jessmi.entity.DetalleCompra;
+import pe.jessmi.entity.Producto;
 import pe.jessmi.service.CompraService;
+import pe.jessmi.service.DetalleCompraService;
 
 @RestController
 @RequestMapping("/compra")
@@ -23,6 +28,8 @@ public class CompraRestController {
 
 	@Autowired
 	private CompraService service;
+	@Autowired
+	private DetalleCompraService detalleCompraService;
 
 	public CompraRestController() {
 		// TODO Auto-generated constructor stub
@@ -68,6 +75,24 @@ public class CompraRestController {
 	    	return new ResponseEntity<>(HttpStatus.NO_CONTENT);
 	    }
 	    return new ResponseEntity<>(compras, HttpStatus.OK);
+	}
+	
+	//
+
+	@PostMapping("/registrarByProductos/{idCliente}")
+	public ResponseEntity<?> registrarByProductos_POST(@PathVariable Integer idCliente, @RequestParam(required=false) Integer idMetodoPago, @RequestBody List<Producto> productos) {
+		if (idMetodoPago == null) {
+			idMetodoPago = 1;
+		}
+		service.insertByProductos(idCliente, idMetodoPago);
+		Compra compra = service.findByIdClienteLimit1(idCliente);
+		for (Producto producto : productos) {
+			DetalleCompra detalleCompra = new DetalleCompra();
+			detalleCompra.setCompra(compra);
+			detalleCompra.setProducto(producto);
+			detalleCompraService.insert(detalleCompra);
+		}
+		return new ResponseEntity<>("¡Compra registrada!", HttpStatus.CREATED);
 	}
 	
 }

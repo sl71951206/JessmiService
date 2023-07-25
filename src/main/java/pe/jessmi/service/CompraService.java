@@ -10,6 +10,9 @@ public interface CompraService {
 	public abstract Collection<Compra> findAll();
 	public abstract Compra findById(Integer cod_compra);
 	public abstract Collection<Compra> findByIdCliente(Integer id_cliente);
-	public abstract Collection<Compra> findByCorreo(String correo); 
+	public abstract Collection<Compra> findByCorreo(String correo);
+	
+	public abstract Compra findByIdClienteLimit1(Integer id_cliente);
+	public abstract void insertByProductos(Integer idCliente, Integer idMetodoPago);
 	
 }

@@ -20,11 +20,8 @@ public class DetalleCompra implements Serializable {
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Integer id_detalle_compra;
-
-	@Column
-	private Integer num_detalle;
 	
-	@Column
+	@Column(columnDefinition="INT DEFAULT 1")
 	private Integer cantidad;
 	
 	@ManyToOne
@@ -39,8 +36,7 @@ public class DetalleCompra implements Serializable {
 		// TODO Auto-generated constructor stub
 	}
 
-	public DetalleCompra(Integer num_detalle, Integer cantidad, Compra compra, Producto producto) {
-		this.num_detalle = num_detalle;
+	public DetalleCompra(Integer cantidad, Compra compra, Producto producto) {
 		this.cantidad = cantidad;
 		this.compra = compra;
 		this.producto = producto;
@@ -52,14 +48,6 @@ public class DetalleCompra implements Serializable {
 
 	public void setId_detalle_compra(Integer id_detalle_compra) {
 		this.id_detalle_compra = id_detalle_compra;
-	}
-
-	public Integer getNum_detalle() {
-		return num_detalle;
-	}
-
-	public void setNum_detalle(Integer num_detalle) {
-		this.num_detalle = num_detalle;
 	}
 
 	public Integer getCantidad() {

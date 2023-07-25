@@ -13,7 +13,6 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
-import javax.persistence.PrePersist;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
@@ -28,17 +27,9 @@ public class Compra implements Serializable {
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Integer cod_compra;
 	
-	@Column
+	@Column(columnDefinition="DATETIME DEFAULT CURRENT_TIMESTAMP")
 	private LocalDateTime fecha_compra;
-	
-	@Column
-	private Double total;
-	
-	@PrePersist
-	public void prePersist() {
-		fecha_compra = LocalDateTime.now();
-	}
-	
+
 	@ManyToOne
 	@JoinColumn(name="id_cliente")
 	private Cliente clienteCompra;
@@ -74,14 +65,6 @@ public class Compra implements Serializable {
 
 	public void setFecha_compra(LocalDateTime fecha_compra) {
 		this.fecha_compra = fecha_compra;
-	}
-
-	public Double getTotal() {
-		return total;
-	}
-
-	public void setTotal(Double total) {
-		this.total = total;
 	}
 
 	public Cliente getCliente() {
