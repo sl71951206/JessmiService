@@ -53,7 +53,9 @@ public class Producto implements Serializable {
 		// TODO Auto-generated constructor stub
 	}
 
-	public Producto(String nombre, String marca, Double precio, String foto, Integer stock, CategoriaProductos categoriaProductos) {
+	public Producto(String nombre, String marca, Double precio, String foto, Integer stock,
+			CategoriaProductos categoriaProductos) {
+		super();
 		this.nombre = nombre;
 		this.marca = marca;
 		this.precio = precio;

@@ -2,6 +2,7 @@ package pe.jessmi.controller;
 
 import java.util.Collection;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -18,8 +19,10 @@ import org.springframework.web.bind.annotation.RestController;
 import pe.jessmi.entity.Compra;
 import pe.jessmi.entity.DetalleCompra;
 import pe.jessmi.entity.Producto;
+import pe.jessmi.service.ClienteService;
 import pe.jessmi.service.CompraService;
 import pe.jessmi.service.DetalleCompraService;
+import pe.jessmi.service.MetodoPagoService;
 
 @RestController
 @RequestMapping("/compra")
@@ -28,6 +31,10 @@ public class CompraRestController {
 
 	@Autowired
 	private CompraService service;
+	@Autowired
+	private ClienteService clienteService;
+	@Autowired
+	private MetodoPagoService metodoPagoService;
 	@Autowired
 	private DetalleCompraService detalleCompraService;
 
@@ -59,6 +66,8 @@ public class CompraRestController {
 	    return new ResponseEntity<>(compra, HttpStatus.OK);
 	}
 	
+	//
+	
 	@GetMapping("/buscarPorIdCliente/{idCliente}")
 	public ResponseEntity<?> buscarPorIdCliente_GET(@PathVariable Integer idCliente) {
 		Collection<Compra> compras = service.findByIdCliente(idCliente);
@@ -79,20 +88,36 @@ public class CompraRestController {
 	
 	//
 
-	@PostMapping("/registrarByProductos/{idCliente}")
-	public ResponseEntity<?> registrarByProductos_POST(@PathVariable Integer idCliente, @RequestParam(required=false) Integer idMetodoPago, @RequestBody List<Producto> productos) {
+	@PostMapping("/registrarByComponents/{idCliente}")
+	public ResponseEntity<?> registrarByComponents_POST(@PathVariable Integer idCliente, @RequestParam(required=false) Integer idMetodoPago, @RequestBody List<Producto> productos) {
+		if (clienteService.findById(idCliente) == null) {
+			return new ResponseEntity<>("¡No existe el cliente " + idCliente + "!", HttpStatus.NOT_FOUND);
+		}
 		if (idMetodoPago == null) {
 			idMetodoPago = 1;
+		} else if (metodoPagoService.findById(idMetodoPago) == null) {
+			return new ResponseEntity<>("¡No existe el método de pago " + idMetodoPago + "!", HttpStatus.NOT_FOUND);
 		}
-		service.insertByProductos(idCliente, idMetodoPago);
-		Compra compra = service.findByIdClienteLimit1(idCliente);
+		service.insertByComponents(idCliente, idMetodoPago);
+		Compra compra = service.findLastByIdCliente(idCliente);
 		for (Producto producto : productos) {
 			DetalleCompra detalleCompra = new DetalleCompra();
+			detalleCompra.setCantidad(1);
 			detalleCompra.setCompra(compra);
 			detalleCompra.setProducto(producto);
 			detalleCompraService.insert(detalleCompra);
 		}
 		return new ResponseEntity<>("¡Compra registrada!", HttpStatus.CREATED);
+	}
+	
+	@GetMapping("/buscarTotalPorIdCliente/{idCliente}")
+	public ResponseEntity<?> buscarTotalPorIdCliente_GET(@PathVariable Integer idCliente) {
+		Collection<Map<String, Object>> compras = service.findTotalByIdCliente(idCliente);
+        if (compras.isEmpty()) {
+        	return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        } else {
+            return new ResponseEntity<>(compras, HttpStatus.OK);
+        }
 	}
 	
 }

@@ -37,9 +37,10 @@ public class ActividadCliente implements Serializable {
 		// TODO Auto-generated constructor stub
 	}
 
-	public ActividadCliente(TipoActividad tipoActividad, Cliente cliente) {
+	public ActividadCliente(TipoActividad tipoActividad, Cliente clienteActividadCliente) {
+		super();
 		this.tipoActividad = tipoActividad;
-		this.clienteActividadCliente = cliente;
+		this.clienteActividadCliente = clienteActividadCliente;
 	}
 
 	public Integer getId_actividad_cliente() {
@@ -66,12 +67,12 @@ public class ActividadCliente implements Serializable {
 		this.tipoActividad = tipoActividad;
 	}
 
-	public Cliente getCliente() {
+	public Cliente getClienteActividadCliente() {
 		return clienteActividadCliente;
 	}
 
-	public void setCliente(Cliente cliente) {
-		this.clienteActividadCliente = cliente;
+	public void setClienteActividadCliente(Cliente clienteActividadCliente) {
+		this.clienteActividadCliente = clienteActividadCliente;
 	}
 
 	public static long getSerialversionuid() {

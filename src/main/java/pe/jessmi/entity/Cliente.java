@@ -44,12 +44,13 @@ public class Cliente implements Serializable {
 	@OneToMany(mappedBy="clienteCompra")
 	@JsonIgnore
 	private Collection<Compra> compras = new ArrayList<>();
-
+	
 	public Cliente() {
 		// TODO Auto-generated constructor stub
 	}
 
 	public Cliente(String nombres, String apellidos, String correo, String contrasena) {
+		super();
 		this.nombres = nombres;
 		this.apellidos = apellidos;
 		this.correo = correo;

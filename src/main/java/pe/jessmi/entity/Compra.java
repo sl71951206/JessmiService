@@ -46,8 +46,9 @@ public class Compra implements Serializable {
 		// TODO Auto-generated constructor stub
 	}
 
-	public Compra(Cliente cliente, MetodoPago metodoPago) {
-		this.clienteCompra = cliente;
+	public Compra(Cliente clienteCompra, MetodoPago metodoPago) {
+		super();
+		this.clienteCompra = clienteCompra;
 		this.metodoPago = metodoPago;
 	}
 
@@ -67,20 +68,12 @@ public class Compra implements Serializable {
 		this.fecha_compra = fecha_compra;
 	}
 
-	public Cliente getCliente() {
+	public Cliente getClienteCompra() {
 		return clienteCompra;
 	}
 
-	public void setCliente(Cliente cliente) {
-		this.clienteCompra = cliente;
-	}
-
-	public Collection<DetalleCompra> getDetallesCompra() {
-		return detallesCompra;
-	}
-
-	public void setDetallesCompra(Collection<DetalleCompra> detallesCompra) {
-		this.detallesCompra = detallesCompra;
+	public void setClienteCompra(Cliente clienteCompra) {
+		this.clienteCompra = clienteCompra;
 	}
 
 	public MetodoPago getMetodoPago() {
@@ -89,6 +82,14 @@ public class Compra implements Serializable {
 
 	public void setMetodoPago(MetodoPago metodoPago) {
 		this.metodoPago = metodoPago;
+	}
+
+	public Collection<DetalleCompra> getDetallesCompra() {
+		return detallesCompra;
+	}
+
+	public void setDetallesCompra(Collection<DetalleCompra> detallesCompra) {
+		this.detallesCompra = detallesCompra;
 	}
 
 	public static long getSerialversionuid() {

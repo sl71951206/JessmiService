@@ -32,6 +32,8 @@ public class ActividadClienteServiceImpl implements ActividadClienteService {
 	public ActividadCliente findById(Integer id_actividad_cliente) {
 		return repository.findById(id_actividad_cliente).orElse(null);
 	}
+	
+	//
 
 	@Override
 	public Collection<ActividadCliente> findByIdCliente(Integer id_cliente) {

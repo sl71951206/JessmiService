@@ -26,7 +26,7 @@ public class MetodoPago implements Serializable {
 	
 	@Column(unique=true)
 	private String nombre;
-	
+
 	@OneToMany(mappedBy="metodoPago")
 	@JsonBackReference
 	private Collection<Compra> compras = new ArrayList<>();
@@ -36,6 +36,13 @@ public class MetodoPago implements Serializable {
 	}
 
 	public MetodoPago(String nombre) {
+		super();
+		this.nombre = nombre;
+	}
+
+	public MetodoPago(Integer id_metodo_pago, String nombre) {
+		super();
+		this.id_metodo_pago = id_metodo_pago;
 		this.nombre = nombre;
 	}
 

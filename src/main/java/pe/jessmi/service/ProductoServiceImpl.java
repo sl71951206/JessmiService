@@ -33,6 +33,20 @@ public class ProductoServiceImpl implements ProductoService {
 	}
 
 	@Override
+	@Transactional
+	public void update(Producto producto) {
+		repository.save(producto);
+	}
+
+	@Override
+	@Transactional
+	public void delete(Integer idProducto) {
+		repository.deleteById(idProducto);
+	}
+	
+	//
+	
+	@Override
 	@Transactional(readOnly=true)
 	public Collection<Producto> findByMarca(String marca) {
 		return repository.findByMarca(marca);
@@ -54,18 +68,6 @@ public class ProductoServiceImpl implements ProductoService {
 	@Transactional(readOnly=true)
 	public Collection<Producto> orderByStock() {
 		return repository.orderByStock();
-	}
-
-	@Override
-	@Transactional
-	public void update(Producto producto) {
-		repository.save(producto);
-	}
-
-	@Override
-	@Transactional
-	public void delete(Integer idProducto) {
-		repository.deleteById(idProducto);
 	}
 
 }

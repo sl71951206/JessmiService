@@ -54,6 +54,36 @@ public class ProductoRestController {
 	    return new ResponseEntity<>(producto, HttpStatus.OK);
 	}
 	
+	@PutMapping("/editar/{idProducto}")
+	public ResponseEntity<?> editar_PUT(@RequestBody Producto producto, @PathVariable Integer idProducto) {
+		Producto productoBD = service.findById(idProducto);
+		if (productoBD != null) {
+			if (producto.getCategoriaProductos() != null) {
+				productoBD.setCategoriaProductos(producto.getCategoriaProductos());
+			}
+			productoBD.setFoto(producto.getFoto());
+			productoBD.setMarca(producto.getMarca());
+			productoBD.setNombre(producto.getNombre());
+			productoBD.setPrecio(producto.getPrecio());
+			productoBD.setStock(producto.getStock());
+			service.update(productoBD);
+			return new ResponseEntity<>("¡Producto editado!", HttpStatus.OK);
+		}
+		return new ResponseEntity<>("¡No existe el producto " + idProducto + "!", HttpStatus.NOT_FOUND);
+	}
+	
+	@DeleteMapping("/borrar/{idProducto}")
+	public ResponseEntity<?> borrar_DELETE(@PathVariable Integer idProducto) {
+		Producto productoBD = service.findById(idProducto);
+		if (productoBD != null) {		
+			service.delete(idProducto);
+			return new ResponseEntity<>("¡Producto borrado!", HttpStatus.OK);
+		}
+		return new ResponseEntity<>("¡No existe el producto " + idProducto + "!", HttpStatus.NOT_FOUND);
+	}
+	
+	//
+	
 	@GetMapping("/buscarPorMarca/{marca}")
 	public ResponseEntity<?> buscarPorMarca_GET(@PathVariable String marca) {
 		Collection<Producto> productos = service.findByMarca(marca);
@@ -88,27 +118,6 @@ public class ProductoRestController {
 	    	return new ResponseEntity<>(HttpStatus.NO_CONTENT);
 	    }
 	    return new ResponseEntity<>(productos, HttpStatus.OK);
-	}
-	
-	@PutMapping("/editar/{idProducto}")
-	public ResponseEntity<?> editar_PUT(@RequestBody Producto producto, @PathVariable Integer idProducto) {
-		Producto productoBD = service.findById(idProducto);
-		if (productoBD != null) {
-			producto.setId_producto(productoBD.getId_producto());
-			service.update(producto);
-			return new ResponseEntity<>("¡Producto editado!", HttpStatus.OK);
-		}
-		return new ResponseEntity<>("¡No existe el producto " + idProducto + "!", HttpStatus.NOT_FOUND);
-	}
-	
-	@DeleteMapping("/borrar/{idProducto}")
-	public ResponseEntity<?> borrar_DELETE(@PathVariable Integer idProducto) {
-		Producto productoBD = service.findById(idProducto);
-		if (productoBD != null) {		
-			service.delete(idProducto);
-			return new ResponseEntity<>("¡Producto borrado!", HttpStatus.OK);
-		}
-		return new ResponseEntity<>("¡No existe el producto " + idProducto + "!", HttpStatus.NOT_FOUND);
 	}
 
 }

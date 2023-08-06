@@ -1,6 +1,7 @@
 package pe.jessmi.service;
 
 import java.util.Collection;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -32,6 +33,8 @@ public class CompraServiceImpl implements CompraService {
 	public Compra findById(Integer cod_compra) {
 		return repository.findById(cod_compra).orElse(null);
 	}
+	
+	//
 
 	@Override
 	@Transactional(readOnly=true)
@@ -44,17 +47,25 @@ public class CompraServiceImpl implements CompraService {
 	public Collection<Compra> findByCorreo(String correo) {
 		return repository.findByCorreo(correo);
 	}
+	
+	//
 
 	@Override
 	@Transactional(readOnly=true)
-	public Compra findByIdClienteLimit1(Integer id_cliente) {
-		return repository.findByIdClienteLimit1(id_cliente);
+	public Compra findLastByIdCliente(Integer id_cliente) {
+		return repository.findLastByIdCliente(id_cliente);
 	}
 	
 	@Override
 	@Transactional
-	public void insertByProductos(Integer idCliente, Integer idMetodoPago) {
-		repository.saveByProductos(idCliente, idMetodoPago);
+	public void insertByComponents(Integer idCliente, Integer idMetodoPago) {
+		repository.saveByComponents(idCliente, idMetodoPago);
+	}
+
+	@Override
+	@Transactional(readOnly=true)
+	public Collection<Map<String, Object>> findTotalByIdCliente(Integer id_cliente) {
+		return repository.findTotalByIdCliente(id_cliente);
 	}
 
 }

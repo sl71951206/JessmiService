@@ -32,6 +32,8 @@ public class DetalleCompraServiceImpl implements DetalleCompraService {
 	public DetalleCompra findById(Integer id_detalle_compra) {
 		return repository.findById(id_detalle_compra).orElse(null);
 	}
+	
+	//
 
 	@Override
 	public Collection<DetalleCompra> findByCodCompra(Integer cod_compra) {

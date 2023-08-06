@@ -26,7 +26,7 @@ public class TipoActividad implements Serializable {
 	
 	@Column(unique=true)
 	private String nombre;
-	
+
 	@OneToMany(mappedBy="tipoActividad")
 	@JsonBackReference
 	private Collection<ActividadCliente> actividadesCliente = new ArrayList<>();
@@ -36,6 +36,13 @@ public class TipoActividad implements Serializable {
 	}
 
 	public TipoActividad(String nombre) {
+		super();
+		this.nombre = nombre;
+	}
+
+	public TipoActividad(Integer id_tipo_actividad, String nombre) {
+		super();
+		this.id_tipo_actividad = id_tipo_actividad;
 		this.nombre = nombre;
 	}
 

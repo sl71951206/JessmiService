@@ -10,7 +10,7 @@ import pe.jessmi.entity.DetalleCompra;
 
 public interface DetalleCompraRepository extends JpaRepository<DetalleCompra, Integer> {
 
-	@Query(value="SELECT * FROM detalle_compra WHERE cod_compra = :cod_compra ORDER BY num_detalle", nativeQuery=true)
+	@Query(value="SELECT * FROM detalle_compra WHERE cod_compra = :cod_compra", nativeQuery=true)
 	public abstract Collection<DetalleCompra> findByCodCompra(@Param("cod_compra") Integer cod_compra);
 
 }

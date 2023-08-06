@@ -27,7 +27,7 @@ public class CategoriaProductos implements Serializable {
 	
 	@Column(unique=true)
 	private String titulo;
-	
+
 	@OneToMany(mappedBy="categoriaProductos", cascade=CascadeType.ALL)
 	@JsonBackReference
 	private Collection<Producto> productos = new ArrayList<>();
@@ -37,6 +37,13 @@ public class CategoriaProductos implements Serializable {
 	}
 
 	public CategoriaProductos(String titulo) {
+		super();
+		this.titulo = titulo;
+	}
+
+	public CategoriaProductos(Integer id_categoria_productos, String titulo) {
+		super();
+		this.id_categoria_productos = id_categoria_productos;
 		this.titulo = titulo;
 	}
 

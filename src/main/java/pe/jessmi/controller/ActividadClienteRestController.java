@@ -52,6 +52,8 @@ public class ActividadClienteRestController {
 	    return new ResponseEntity<>(actividadCliente, HttpStatus.OK);
 	}
 	
+	//
+	
 	@GetMapping("/buscarPorIdCliente/{idCliente}")
 	public ResponseEntity<?> buscarPorIdCliente_GET(@PathVariable Integer idCliente) {
 		Collection<ActividadCliente> actividadClientes = service.findByIdCliente(idCliente);

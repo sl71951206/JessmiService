@@ -36,7 +36,14 @@ public class DetalleCompra implements Serializable {
 		// TODO Auto-generated constructor stub
 	}
 
+	public DetalleCompra(Compra compra, Producto producto) {
+		super();
+		this.compra = compra;
+		this.producto = producto;
+	}
+	
 	public DetalleCompra(Integer cantidad, Compra compra, Producto producto) {
+		super();
 		this.cantidad = cantidad;
 		this.compra = compra;
 		this.producto = producto;

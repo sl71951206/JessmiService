@@ -52,6 +52,8 @@ public class DetalleCompraRestController {
 	    return new ResponseEntity<>(detalleCompra, HttpStatus.OK);
 	}
 	
+	//
+	
 	@GetMapping("/buscarPorCodCompra/{codCompra}")
 	public ResponseEntity<?> buscarPorCodCompra_GET(@PathVariable Integer codCompra) {
 		Collection<DetalleCompra> detalleCompras = service.findByCodCompra(codCompra);
