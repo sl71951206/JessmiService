@@ -19,4 +19,9 @@ public interface ProductoService {
 	public abstract Collection<Producto> orderByPrecio();
 	public abstract Collection<Producto> orderByStock();
 	
+	//
+	
+	public abstract Collection<Producto> find10BestSellers();
+	public abstract Collection<Producto> find5Newer();
+	
 }

@@ -69,5 +69,17 @@ public class ProductoServiceImpl implements ProductoService {
 	public Collection<Producto> orderByStock() {
 		return repository.orderByStock();
 	}
+	
+	//
+
+	@Override
+	public Collection<Producto> find10BestSellers() {
+		return repository.find10BestSellers();
+	}
+
+	@Override
+	public Collection<Producto> find5Newer() {
+		return repository.find5Newer();
+	}
 
 }

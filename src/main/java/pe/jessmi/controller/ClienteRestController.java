@@ -104,4 +104,13 @@ public class ClienteRestController {
 		return new ResponseEntity<>("¡Credenciales incorrectas!", HttpStatus.NOT_FOUND);
 	}
 	
+	@PostMapping("/buscarPorCorreoRetrofit")
+	public ResponseEntity<?> buscarPorCorreoRetrofit_POST(@RequestBody Cliente cliente) {
+		Cliente clienteDB = service.findByCorreo(cliente.getCorreo());
+		if (clienteDB != null && passwordEncoder.matches(cliente.getContrasena(), clienteDB.getContrasena())) {
+			return new ResponseEntity<>(clienteDB, HttpStatus.OK);
+		}
+		return new ResponseEntity<>("¡Credenciales incorrectas!", HttpStatus.NOT_FOUND);
+	}
+	
 }

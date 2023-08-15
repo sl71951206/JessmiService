@@ -12,6 +12,8 @@ import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 @Entity
 @Table(name="role")
 public class RoleEntity implements Serializable {
@@ -33,6 +35,7 @@ public class RoleEntity implements Serializable {
 	}
 	
 	@ManyToMany(mappedBy="roles")
+	@JsonBackReference
 	private Set<UserEntity> usuarios = new HashSet<>();
 
 	public Integer getRoleId() {

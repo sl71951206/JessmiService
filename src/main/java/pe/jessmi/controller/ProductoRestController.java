@@ -119,5 +119,25 @@ public class ProductoRestController {
 	    }
 	    return new ResponseEntity<>(productos, HttpStatus.OK);
 	}
+	
+	//
+	
+	@GetMapping("/masVendidos")
+	public ResponseEntity<?> masVendidos_GET() {
+		Collection<Producto> productos = service.find10BestSellers();
+	    if (productos.isEmpty()) {
+	    	return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+	    }
+	    return new ResponseEntity<>(productos, HttpStatus.OK);
+	}
+	
+	@GetMapping("/masNuevos")
+	public ResponseEntity<?> masNuevos_GET() {
+		Collection<Producto> productos = service.find5Newer();
+	    if (productos.isEmpty()) {
+	    	return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+	    }
+	    return new ResponseEntity<>(productos, HttpStatus.OK);
+	}
 
 }
