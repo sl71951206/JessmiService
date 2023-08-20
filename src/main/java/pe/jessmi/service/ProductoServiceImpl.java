@@ -71,13 +71,26 @@ public class ProductoServiceImpl implements ProductoService {
 	}
 	
 	//
+	
+	@Override
+	public Collection<Producto> findAllWithCondition() {
+		return repository.findAllWithCondition();
+	}
+	
+	@Override
+	@Transactional(readOnly=true)
+	public Collection<Producto> findByNombreOrMarca(String x) {
+		return repository.findByNombreOrMarca(x);
+	}
 
 	@Override
+	@Transactional(readOnly=true)
 	public Collection<Producto> find10BestSellers() {
 		return repository.find10BestSellers();
 	}
 
 	@Override
+	@Transactional(readOnly=true)
 	public Collection<Producto> find5Newer() {
 		return repository.find5Newer();
 	}

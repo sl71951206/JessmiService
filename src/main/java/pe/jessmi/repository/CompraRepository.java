@@ -28,12 +28,13 @@ public interface CompraRepository extends JpaRepository<Compra, Integer> {
 	@Query(value="INSERT INTO compra(id_cliente, id_metodo_pago) VALUES (:idCliente, :idMetodoPago)", nativeQuery=true)
 	public abstract void saveByComponents(@Param("idCliente") Integer idCliente, @Param("idMetodoPago") Integer idMetodoPago);
 	
-	@Query(value="SELECT D.cod_compra, C.fecha_compra, C.id_cliente, SUM(P.precio) AS total "
+	@Query(value="SELECT D.cod_compra, C.fecha_compra, C.id_cliente, SUM(P.precio * D.cantidad) AS total "
 			+ " FROM detalle_compra D"
 			+ " INNER JOIN compra C ON D.cod_compra = C.cod_compra"
 			+ " INNER JOIN producto P ON P.id_producto = D.id_producto"
 			+ " WHERE C.id_cliente = :id_cliente"
-			+ " GROUP BY D.cod_compra", nativeQuery=true)
+			+ " GROUP BY D.cod_compra"
+			+ " ORDER BY D.cod_compra DESC", nativeQuery=true)
 	public abstract Collection<Map<String, Object>> findTotalByIdCliente(@Param("id_cliente") Integer id_cliente);
 
 }

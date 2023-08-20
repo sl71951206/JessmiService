@@ -21,6 +21,8 @@ public interface ProductoService {
 	
 	//
 	
+	public abstract Collection<Producto> findAllWithCondition();
+	public abstract Collection<Producto> findByNombreOrMarca(String x);
 	public abstract Collection<Producto> find10BestSellers();
 	public abstract Collection<Producto> find5Newer();
 	

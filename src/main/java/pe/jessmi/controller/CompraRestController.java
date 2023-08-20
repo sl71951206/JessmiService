@@ -19,10 +19,12 @@ import org.springframework.web.bind.annotation.RestController;
 import pe.jessmi.entity.Compra;
 import pe.jessmi.entity.DetalleCompra;
 import pe.jessmi.entity.Producto;
+import pe.jessmi.mapper.ProductoMapper;
 import pe.jessmi.service.ClienteService;
 import pe.jessmi.service.CompraService;
 import pe.jessmi.service.DetalleCompraService;
 import pe.jessmi.service.MetodoPagoService;
+import pe.jessmi.service.ProductoService;
 
 @RestController
 @RequestMapping("/compra")
@@ -37,6 +39,8 @@ public class CompraRestController {
 	private MetodoPagoService metodoPagoService;
 	@Autowired
 	private DetalleCompraService detalleCompraService;
+	@Autowired
+	private ProductoService productoService;
 
 	public CompraRestController() {
 		// TODO Auto-generated constructor stub
@@ -87,9 +91,18 @@ public class CompraRestController {
 	}
 	
 	//
+	
+	@GetMapping("/buscarUltimoPorIdCliente/{idCliente}")
+	public ResponseEntity<?> buscarUltimoPorIdCliente_GET(@PathVariable Integer idCliente) {
+		Compra compra = service.findLastByIdCliente(idCliente);
+		if (compra == null) {
+	    	return new ResponseEntity<>("¡No existe ninguna compra con el cliente " + idCliente + "!", HttpStatus.NOT_FOUND);
+	    }
+	    return new ResponseEntity<>(compra, HttpStatus.OK);
+	}
 
 	@PostMapping("/registrarByComponents/{idCliente}")
-	public ResponseEntity<?> registrarByComponents_POST(@PathVariable Integer idCliente, @RequestParam(required=false) Integer idMetodoPago, @RequestBody List<Producto> productos) {
+	public ResponseEntity<?> registrarByComponents_POST(@PathVariable Integer idCliente, @RequestParam(required=false) Integer idMetodoPago, @RequestBody List<ProductoMapper> productos) {
 		if (clienteService.findById(idCliente) == null) {
 			return new ResponseEntity<>("¡No existe el cliente " + idCliente + "!", HttpStatus.NOT_FOUND);
 		}
@@ -100,11 +113,14 @@ public class CompraRestController {
 		}
 		service.insertByComponents(idCliente, idMetodoPago);
 		Compra compra = service.findLastByIdCliente(idCliente);
-		for (Producto producto : productos) {
+		for (ProductoMapper p : productos) {
+			Producto producto = productoService.findById(p.getId_producto());
 			DetalleCompra detalleCompra = new DetalleCompra();
-			detalleCompra.setCantidad(1);
+			detalleCompra.setCantidad(p.getCantidad());
 			detalleCompra.setCompra(compra);
 			detalleCompra.setProducto(producto);
+			producto.setStock(producto.getStock() - p.getCantidad());
+			productoService.update(producto);
 			detalleCompraService.insert(detalleCompra);
 		}
 		return new ResponseEntity<>("¡Compra registrada!", HttpStatus.CREATED);

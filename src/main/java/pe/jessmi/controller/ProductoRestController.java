@@ -122,6 +122,24 @@ public class ProductoRestController {
 	
 	//
 	
+	@GetMapping("/listarConCondicion")
+	public ResponseEntity<?> listarConCondicion_GET() {
+		Collection<Producto> productos = service.findAllWithCondition();
+		if(productos.isEmpty()) {
+			return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+		}
+		return new ResponseEntity<>(productos, HttpStatus.OK);
+	}
+	
+	@GetMapping("/buscarPorNombreOMarca/{x}")
+	public ResponseEntity<?> buscarPorNombreOMarca_GET(@PathVariable String x) {
+		Collection<Producto> productos = service.findByNombreOrMarca(x);
+	    if (productos.isEmpty()) {
+	    	return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+	    }
+	    return new ResponseEntity<>(productos, HttpStatus.OK);
+	}
+	
 	@GetMapping("/masVendidos")
 	public ResponseEntity<?> masVendidos_GET() {
 		Collection<Producto> productos = service.find10BestSellers();
