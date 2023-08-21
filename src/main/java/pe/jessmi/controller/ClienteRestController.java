@@ -113,4 +113,18 @@ public class ClienteRestController {
 		return new ResponseEntity<>("¡Credenciales incorrectas!", HttpStatus.NOT_FOUND);
 	}
 	
+	@PutMapping("/eliminarCuenta")
+	public ResponseEntity<?> eliminarCuenta_PUT(@RequestBody Cliente cliente) {
+		Cliente clienteDB = service.findByCorreo(cliente.getCorreo());
+		if (clienteDB != null && passwordEncoder.matches(cliente.getContrasena(), clienteDB.getContrasena())) {
+			clienteDB.setApellidos(null);
+			clienteDB.setContrasena("");
+			clienteDB.setCorreo("anonimo" + clienteDB.getId_cliente());
+			clienteDB.setNombres(null);
+			service.update(clienteDB);
+			return new ResponseEntity<>(clienteDB, HttpStatus.OK);
+		}
+		return new ResponseEntity<>("¡Credenciales incorrectas!", HttpStatus.NOT_FOUND);
+	}
+	
 }
